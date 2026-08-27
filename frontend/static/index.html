@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mom's Kids Video Explainer (6 Years Old)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap">
+<style>
+  :root { --primary:#ff4757; --accent:#ffa502; --bg:#f1f2f6; --card-bg:#ffffff; --text:#2f3542; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:'Quicksand', system-ui, sans-serif; background:var(--bg); display:flex; flex-direction:column; height:100vh; color:var(--text); }
+  header { background:linear-gradient(135deg, #ff4757, #ff6b81); color:#fff; padding:1rem 1.2rem; font-family:'Fredoka One', cursive; box-shadow:0 4px 15px rgba(255,71,87,0.3); display:flex; justify-content:space-between; align-items:center; }
+  .header-left { display:flex; align-items:center; gap:0.8rem; font-size:1.5rem; }
+  .badge { background:#fff; color:#ff4757; padding:0.3rem 0.8rem; border-radius:20px; font-size:0.95rem; font-family:'Quicksand', sans-serif; font-weight:bold; }
+  .header-right { display:flex; gap:0.6rem; align-items:center; }
+  .btn-mom-voice { background:#ffa502; color:#fff; border:none; padding:0.5rem 1.1rem; border-radius:25px; font-family:'Fredoka One', cursive; font-size:0.95rem; cursor:pointer; box-shadow:0 3px 8px rgba(255,165,2,0.4); transition:transform 0.1s; }
+  .btn-mom-voice:hover { transform:scale(1.04); }
+  #log { flex:1; overflow-y:auto; padding:1.2rem; max-width:850px; width:100%; margin:0 auto; }
+  .msg { margin:1rem 0; display:flex; flex-direction:column; }
+  .msg.user { align-items:flex-end; }
+  .msg.agent { align-items:flex-start; }
+  .bubble { padding:1rem 1.3rem; border-radius:20px; background:#fff; border:2px solid #eccc68; max-width:85%; box-shadow:0 4px 12px rgba(0,0,0,0.05); font-size:1.05rem; line-height:1.5; }
+  .msg.user .bubble { background:linear-gradient(135deg, #ffa502, #ff7f50); color:#fff; border:none; }
+  form { display:flex; gap:0.8rem; padding:1.2rem; background:#fff; border-top:2px solid #dfe4ea; max-width:850px; width:100%; margin:0 auto; border-radius:15px 15px 0 0; }
+  input { flex:1; padding:0.9rem 1.2rem; border:2px solid #eccc68; border-radius:30px; font-size:1.1rem; font-family:'Quicksand', sans-serif; outline:none; }
+  input:focus { border-color:#ff4757; }
+  button.submit-btn { padding:0.9rem 1.8rem; border:none; border-radius:30px; background:linear-gradient(135deg, #2ed573, #26af5f); color:#fff; font-family:'Fredoka One', cursive; font-size:1.1rem; cursor:pointer; box-shadow:0 4px 10px rgba(46,213,115,0.3); transition:transform 0.1s; }
+  button.submit-btn:hover { transform:scale(1.03); }
+
+  /* Voice Studio Modal */
+  .modal-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center; }
+  .modal-overlay.active { display:flex; }
+  .modal-box { background:#fff; border-radius:25px; padding:1.8rem; max-width:520px; width:90%; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.3); font-family:'Quicksand', sans-serif; }
+  .modal-title { font-family:'Fredoka One', cursive; font-size:1.6rem; color:#ff4757; margin:0 0 0.8rem 0; }
+  .modal-desc { font-size:0.95rem; color:#57606f; margin-bottom:1.2rem; line-height:1.4; }
+  .rec-btn { background:#ff4757; color:#fff; border:none; padding:0.8rem 1.5rem; border-radius:30px; font-family:'Fredoka One', cursive; font-size:1.1rem; cursor:pointer; margin-bottom:1rem; box-shadow:0 4px 12px rgba(255,71,87,0.4); }
+  .rec-btn.recording { background:#2ed573; animation:pulse 1s infinite; }
+  .upload-box { background:#f1f2f6; border:2px dashed #ffa502; border-radius:15px; padding:1rem; margin:0.8rem 0; }
+  @keyframes pulse { 0%{transform:scale(1);} 50%{transform:scale(1.05);} 100%{transform:scale(1);} }
+  audio { width:100%; margin:1rem 0; }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-left">
+    <span>🧸 Mom's Kids Video Explainer</span>
+    <span class="badge">6 Years Old 🎈</span>
+  </div>
+  <div class="header-right">
+    <button class="btn-mom-voice" id="voice-rec-btn">🎙️ Record/Upload Mom's Voice</button>
+  </div>
+</header>
+
+<!-- Mom Voice Capture Studio Modal -->
+<div class="modal-overlay" id="voice-modal">
+  <div class="modal-box">
+    <h2 class="modal-title">🎙️ Mom's Voice Studio</h2>
+    <p class="modal-desc">Record live or upload any voice sample of Mom so generated videos sound like Mom reading warm, friendly stories to her 6-year-old daughter!</p>
+    
+    <button class="rec-btn" id="start-rec-btn">🔴 Start Mic Recording (5s)</button>
+    
+    <div class="upload-box">
+      <div style="font-weight:bold; margin-bottom:0.5rem; color:#2f3542;">📁 Or Upload Mom's Voice Audio File:</div>
+      <input type="file" id="voice-file-input" accept="audio/*" style="display:block; margin:0 auto; font-size:0.9rem;">
+    </div>
+
+    <div id="rec-status" style="font-weight:bold; color:#ff4757; margin-bottom:0.5rem;"></div>
+    <audio id="audio-preview" controls style="display:none;"></audio>
+    <br>
+    <button class="submit-btn" id="save-voice-btn" style="display:none; background:#2ed573; margin-top:0.8rem;">💾 Activate Mom's Voice Profile</button>
+    <button style="background:#a4b0be; color:#fff; border:none; padding:0.5rem 1rem; border-radius:20px; font-weight:bold; cursor:pointer; margin-top:0.8rem;" id="close-modal-btn">Close</button>
+  </div>
+</div>
+
+<div id="log">
+  <div class="msg agent">
+    <div class="bubble">
+      👋 <b>Hi Mom!</b> What topic would your 6-year-old daughter love an animated video about today? <br><br>
+      💡 <b>Tip:</b> Click <b>"🎙️ Record/Upload Mom's Voice"</b> at the top to record or upload Mom's voice recording! <br><br>
+      <i>Examples:</i><br>
+      • 🚀 <i>"Generate a video for my 6-year-old about how rockets fly into space!"</i><br>
+      • 🦖 <i>"WHAT ARE DIFFERENT TYPES OF DINOSAURS"</i><br>
+      • ☀️ <i>"Show a video for a 6-year-old about why the sky is blue!"</i>
+    </div>
+  </div>
+</div>
+
+<form id="form">
+  <input id="input" placeholder="Type a question for your 6-year-old daughter..." autocomplete="off" autofocus>
+  <button class="submit-btn">Generate Video 🎥</button>
+</form>
+
+<script>
+const log = document.getElementById("log");
+const form = document.getElementById("form");
+const input = document.getElementById("input");
+
+// Modal & Voice Recorder controls
+const voiceRecBtn = document.getElementById("voice-rec-btn");
+const voiceModal = document.getElementById("voice-modal");
+const closeModalBtn = document.getElementById("close-modal-btn");
+const startRecBtn = document.getElementById("start-rec-btn");
+const voiceFileInput = document.getElementById("voice-file-input");
+const recStatus = document.getElementById("rec-status");
+const audioPreview = document.getElementById("audio-preview");
+const saveVoiceBtn = document.getElementById("save-voice-btn");
+
+let mediaRecorder;
+let audioChunks = [];
+let recordedBlob = null;
+
+voiceRecBtn.addEventListener("click", () => voiceModal.classList.add("active"));
+closeModalBtn.addEventListener("click", () => voiceModal.classList.remove("active"));
+
+voiceFileInput.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    recordedBlob = file;
+    audioPreview.src = URL.createObjectURL(file);
+    audioPreview.style.display = "block";
+    saveVoiceBtn.style.display = "inline-block";
+    recStatus.innerText = "📁 Voice file loaded (" + file.name + "). Click Activate below!";
+  }
+});
+
+startRecBtn.addEventListener("click", async () => {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+    audioChunks = [];
+    
+    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+    mediaRecorder.onstop = () => {
+      recordedBlob = new Blob(audioChunks, { type: 'audio/webm' });
+      audioPreview.src = URL.createObjectURL(recordedBlob);
+      audioPreview.style.display = "block";
+      saveVoiceBtn.style.display = "inline-block";
+      recStatus.innerText = "✅ Mom's Voice Captured! Click Activate below.";
+      startRecBtn.classList.remove("recording");
+      startRecBtn.innerText = "🔴 Re-record Mom's Voice";
+    };
+
+    mediaRecorder.start();
+    startRecBtn.classList.add("recording");
+    recStatus.innerText = "🎙️ Recording Mom... Speak now! (5s)";
+    
+    setTimeout(() => {
+      if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+      }
+    }, 5000);
+  } catch (err) {
+    recStatus.innerText = "💡 Microphone unavailable on this browser. You can use the File Upload option above!";
+  }
+});
+
+saveVoiceBtn.addEventListener("click", async () => {
+  if (!recordedBlob) return;
+  recStatus.innerText = "⏳ Uploading Mom's Voice Profile...";
+  const formData = new FormData();
+  formData.append("file", recordedBlob, "mom_voice.webm");
+
+  try {
+    const res = await fetch("/upload_mom_voice", { method: "POST", body: formData });
+    const data = await res.json();
+    recStatus.innerText = "🎉 " + data.message;
+    voiceRecBtn.innerText = "🎙️ Mom's Voice Active ✨";
+    voiceRecBtn.style.background = "#2ed573";
+    setTimeout(() => voiceModal.classList.remove("active"), 2000);
+  } catch (err) {
+    recStatus.innerText = "❌ Error uploading: " + err.message;
+  }
+});
+
+function el(tag, cls, text) { 
+  const e = document.createElement(tag); 
+  if (cls) e.className = cls; 
+  if (text) e.innerText = text; 
+  return e; 
+}
+
+function append(role, content) {
+  const msg = el("div", `msg ${role}`);
+  const bubble = el("div", "bubble");
+  if (typeof content === "string") {
+    bubble.innerHTML = content;
+  } else {
+    bubble.appendChild(content);
+  }
+  msg.appendChild(bubble);
+  log.appendChild(msg);
+  log.scrollTop = log.scrollHeight;
+}
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const text = input.value.trim();
+  if (!text) return;
+  append("user", text);
+  input.value = "";
+  
+  const loadingMsg = el("div", "msg agent");
+  const loadingBubble = el("div", "bubble", "🎨 Synthesizing 3D artwork video for 6-year-old... please wait 🎬");
+  loadingMsg.appendChild(loadingBubble);
+  log.appendChild(loadingMsg);
+  log.scrollTop = log.scrollHeight;
+
+  try {
+    const res = await fetch("/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text, user_id: "mom-user" })
+    });
+    const data = await res.json();
+    loadingMsg.remove();
+    
+    if (data.parts && data.parts.length > 0) {
+      data.parts.forEach(p => {
+        if (p.kind === "text") {
+          append("agent", p.text);
+        }
+      });
+    } else {
+      append("agent", "(No response received.)");
+    }
+  } catch (err) {
+    loadingMsg.remove();
+    append("agent", "❌ Error connecting to agent: " + err.message);
+  }
+});
+</script>
+</body>
+</html>
