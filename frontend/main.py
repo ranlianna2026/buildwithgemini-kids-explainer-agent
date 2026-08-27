@@ -1,4 +1,8 @@
+import sys
 import os
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 import uuid
 import asyncio
 import google.auth
@@ -7,6 +11,7 @@ import httpx
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
+
 
 app = FastAPI()
 
@@ -19,20 +24,25 @@ async def _json_errors(request: Request, exc: Exception):
         },
     )
 
+@app.post("/upload_parent_voice")
 @app.post("/upload_mom_voice")
-async def upload_mom_voice(request: Request):
+async def upload_parent_voice(request: Request):
     form = await request.form()
     file = form.get("file")
     if file:
-        os.makedirs("static", exist_ok=True)
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        STATIC_DIR = os.path.join(BASE_DIR, "static")
+        os.makedirs(STATIC_DIR, exist_ok=True)
         content = await file.read()
-        save_path = "static/mom_voice_sample.webm"
+        save_path = os.path.join(STATIC_DIR, "parent_voice_sample.webm")
+        wav_path = os.path.join(STATIC_DIR, "parent_voice_sample.wav")
         with open(save_path, "wb") as f:
             f.write(content)
-        # Convert to WAV with ffmpeg if needed
-        os.system(f"ffmpeg -y -i static/mom_voice_sample.webm -ar 24000 -ac 1 static/mom_voice_sample.wav")
-        return JSONResponse({"status": "SUCCESS", "message": "Mom's voice saved successfully! All generated videos will now use Mom's warm vocal pitch!"})
+        os.system(f"ffmpeg -y -i {save_path} -ar 24000 -ac 1 {wav_path}")
+        return JSONResponse({"status": "SUCCESS", "message": "Parent's voice saved successfully! All generated videos will now use Parent's warm vocal pitch!"})
     return JSONResponse({"status": "ERROR", "message": "No file uploaded"}, status_code=400)
+
+
 
 @app.post("/chat")
 async def chat(req: Request):
@@ -49,10 +59,15 @@ async def chat(req: Request):
 
     return JSONResponse({"parts": parts})
 
-app.mount("/", StaticFiles(directory="static", html=True), name="static")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+os.makedirs(STATIC_DIR, exist_ok=True)
+
+app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
 
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+
 
 

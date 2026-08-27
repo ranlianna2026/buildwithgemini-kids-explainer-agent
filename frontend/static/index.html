@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mom's Kids Video Explainer (6 Years Old)</title>
+<title>Parent's Kids Video Explainer (6 Years Old)</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap">
 <style>
   :root { --primary:#ff4757; --accent:#ffa502; --bg:#f1f2f6; --card-bg:#ffffff; --text:#2f3542; }
@@ -43,31 +43,31 @@
 <body>
 <header>
   <div class="header-left">
-    <span>🧸 Mom's Kids Video Explainer</span>
+    <span>🧸 Parent's Kids Video Explainer</span>
     <span class="badge">6 Years Old 🎈</span>
   </div>
   <div class="header-right">
-    <button class="btn-mom-voice" id="voice-rec-btn">🎙️ Record/Upload Mom's Voice</button>
+    <button class="btn-mom-voice" id="voice-rec-btn">🎙️ Record/Upload Parent's Voice</button>
   </div>
 </header>
 
-<!-- Mom Voice Capture Studio Modal -->
+<!-- Parent Voice Capture Studio Modal -->
 <div class="modal-overlay" id="voice-modal">
   <div class="modal-box">
-    <h2 class="modal-title">🎙️ Mom's Voice Studio</h2>
-    <p class="modal-desc">Record live or upload any voice sample of Mom so generated videos sound like Mom reading warm, friendly stories to her 6-year-old daughter!</p>
+    <h2 class="modal-title">🎙️ Parent's Voice Studio</h2>
+    <p class="modal-desc">Record live or upload any voice sample of Parent so generated videos sound like Parent reading warm, friendly stories to their 6-year-old child!</p>
     
     <button class="rec-btn" id="start-rec-btn">🔴 Start Mic Recording (5s)</button>
     
     <div class="upload-box">
-      <div style="font-weight:bold; margin-bottom:0.5rem; color:#2f3542;">📁 Or Upload Mom's Voice Audio File:</div>
+      <div style="font-weight:bold; margin-bottom:0.5rem; color:#2f3542;">📁 Or Upload Parent's Voice Audio File:</div>
       <input type="file" id="voice-file-input" accept="audio/*" style="display:block; margin:0 auto; font-size:0.9rem;">
     </div>
 
     <div id="rec-status" style="font-weight:bold; color:#ff4757; margin-bottom:0.5rem;"></div>
     <audio id="audio-preview" controls style="display:none;"></audio>
     <br>
-    <button class="submit-btn" id="save-voice-btn" style="display:none; background:#2ed573; margin-top:0.8rem;">💾 Activate Mom's Voice Profile</button>
+    <button class="submit-btn" id="save-voice-btn" style="display:none; background:#2ed573; margin-top:0.8rem;">💾 Activate Parent's Voice Profile</button>
     <button style="background:#a4b0be; color:#fff; border:none; padding:0.5rem 1rem; border-radius:20px; font-weight:bold; cursor:pointer; margin-top:0.8rem;" id="close-modal-btn">Close</button>
   </div>
 </div>
@@ -75,8 +75,8 @@
 <div id="log">
   <div class="msg agent">
     <div class="bubble">
-      👋 <b>Hi Mom!</b> What topic would your 6-year-old daughter love an animated video about today? <br><br>
-      💡 <b>Tip:</b> Click <b>"🎙️ Record/Upload Mom's Voice"</b> at the top to record or upload Mom's voice recording! <br><br>
+      👋 <b>Hi Parents!</b> What topic would your 6-year-old child love an animated video about today? <br><br>
+      💡 <b>Tip:</b> Click <b>"🎙️ Record/Upload Parent's Voice"</b> at the top to record or upload Parent's voice recording! <br><br>
       <i>Examples:</i><br>
       • 🚀 <i>"Generate a video for my 6-year-old about how rockets fly into space!"</i><br>
       • 🦖 <i>"WHAT ARE DIFFERENT TYPES OF DINOSAURS"</i><br>
@@ -86,7 +86,7 @@
 </div>
 
 <form id="form">
-  <input id="input" placeholder="Type a question for your 6-year-old daughter..." autocomplete="off" autofocus>
+  <input id="input" placeholder="Type a question for your 6-year-old child..." autocomplete="off" autofocus>
   <button class="submit-btn">Generate Video 🎥</button>
 </form>
 
@@ -135,14 +135,14 @@ startRecBtn.addEventListener("click", async () => {
       audioPreview.src = URL.createObjectURL(recordedBlob);
       audioPreview.style.display = "block";
       saveVoiceBtn.style.display = "inline-block";
-      recStatus.innerText = "✅ Mom's Voice Captured! Click Activate below.";
+      recStatus.innerText = "✅ Parent's Voice Captured! Click Activate below.";
       startRecBtn.classList.remove("recording");
-      startRecBtn.innerText = "🔴 Re-record Mom's Voice";
+      startRecBtn.innerText = "🔴 Re-record Parent's Voice";
     };
 
     mediaRecorder.start();
     startRecBtn.classList.add("recording");
-    recStatus.innerText = "🎙️ Recording Mom... Speak now! (5s)";
+    recStatus.innerText = "🎙️ Recording Parent... Speak now! (5s)";
     
     setTimeout(() => {
       if (mediaRecorder && mediaRecorder.state === "recording") {
@@ -156,15 +156,15 @@ startRecBtn.addEventListener("click", async () => {
 
 saveVoiceBtn.addEventListener("click", async () => {
   if (!recordedBlob) return;
-  recStatus.innerText = "⏳ Uploading Mom's Voice Profile...";
+  recStatus.innerText = "⏳ Uploading Parent's Voice Profile...";
   const formData = new FormData();
-  formData.append("file", recordedBlob, "mom_voice.webm");
+  formData.append("file", recordedBlob, "parent_voice.webm");
 
   try {
     const res = await fetch("/upload_mom_voice", { method: "POST", body: formData });
     const data = await res.json();
     recStatus.innerText = "🎉 " + data.message;
-    voiceRecBtn.innerText = "🎙️ Mom's Voice Active ✨";
+    voiceRecBtn.innerText = "🎙️ Parent's Voice Active ✨";
     voiceRecBtn.style.background = "#2ed573";
     setTimeout(() => voiceModal.classList.remove("active"), 2000);
   } catch (err) {
@@ -209,7 +209,7 @@ form.addEventListener("submit", async (e) => {
     const res = await fetch("/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text, user_id: "mom-user" })
+      body: JSON.stringify({ message: text, user_id: "parent-user" })
     });
     const data = await res.json();
     loadingMsg.remove();

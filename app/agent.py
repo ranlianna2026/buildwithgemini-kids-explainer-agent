@@ -235,7 +235,8 @@ def generate_kids_mp4_video(topic: str = "Types of Dinosaurs", child_name: str =
                 tts.save(audio_raw_path)
                 
                 # Apply warm female/motherly audio pitch processing
-                pitch_filter = "asetrate=24000*1.12,aresample=24000"
+                pitch = "1.15" if has_parent_voice else "1.12"
+                pitch_filter = f"asetrate=24000*{pitch},aresample=24000"
                 os.system(f"ffmpeg -y -i {audio_raw_path} -af \"{pitch_filter}\" {audio_part_path}")
                 dur = get_media_duration(audio_part_path) + 0.6
             except Exception as e:
