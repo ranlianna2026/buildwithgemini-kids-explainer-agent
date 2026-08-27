@@ -172,12 +172,24 @@ saveVoiceBtn.addEventListener("click", async () => {
   }
 });
 
+// Auto-pause all other videos whenever a new video starts playing
+document.addEventListener("play", function(e) {
+  if (e.target && e.target.tagName === "VIDEO") {
+    document.querySelectorAll("video").forEach(v => {
+      if (v !== e.target && !v.paused) {
+        v.pause();
+      }
+    });
+  }
+}, true);
+
 function el(tag, cls, text) { 
   const e = document.createElement(tag); 
   if (cls) e.className = cls; 
   if (text) e.innerText = text; 
   return e; 
 }
+
 
 function append(role, content) {
   const msg = el("div", `msg ${role}`);
