@@ -234,15 +234,21 @@ def generate_kids_mp4_video(topic: str = "Types of Dinosaurs", child_name: str =
                 tts = gTTS(text=slide_speech_text, lang="en", slow=False)
                 tts.save(audio_raw_path)
                 
-                # Apply warm female/motherly audio pitch processing
-                pitch = "1.15" if has_parent_voice else "1.12"
-                pitch_filter = f"asetrate=24000*{pitch},aresample=24000"
-                os.system(f"ffmpeg -y -i {audio_raw_path} -af \"{pitch_filter}\" {audio_part_path}")
+                # If Parent recorded/uploaded a voice sample, play Parent's real recorded voice sample first on Slide 1!
+                if i == 0 and has_parent_voice and os.path.exists(voice_file):
+                    pitched_tts = f"{output_dir}/voice_pitched_{safe_slug}_{run_id}_{i}.mp3"
+                    os.system(f"ffmpeg -y -i {audio_raw_path} -af \"asetrate=24000*1.15,aresample=24000\" {pitched_tts}")
+                    os.system(f"ffmpeg -y -i {voice_file} -i {pitched_tts} -filter_complex \"[0:a][1:a]concat=n=2:v=0:a=1[a]\" -map \"[a]\" {audio_part_path}")
+                else:
+                    pitch = "1.15" if has_parent_voice else "1.12"
+                    pitch_filter = f"asetrate=24000*{pitch},aresample=24000"
+                    os.system(f"ffmpeg -y -i {audio_raw_path} -af \"{pitch_filter}\" {audio_part_path}")
                 dur = get_media_duration(audio_part_path) + 0.6
             except Exception as e:
                 print(f"TTS slide {i} error: {e}")
                 audio_part_path = None
                 dur = 5.0
+
         else:
             audio_part_path = None
             dur = 5.0
