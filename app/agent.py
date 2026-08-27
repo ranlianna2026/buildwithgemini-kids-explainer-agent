@@ -84,40 +84,40 @@ Return ONLY raw valid JSON."""
     # Dynamic topic analysis engine (No API Key required)
     t_lower = topic.lower().strip()
     
-    if any(k in t_lower for k in ["dinosaur", "dianous", "trex", "fossil", "trike", "brachio"]):
+    if any(k in t_lower for k in ["dinosaur", "trex", "triceratops", "brachiosaurus"]):
         clean_title = "Types of Dinosaurs"
         scenes = [
-            {"header": "🌟 6-YEAR-OLD DINOSAUR ADVENTURE 🌟", "title": f"Hi {child_name}! Meet T-Rex! 🦖👑", "sub": "T-Rex was 40 feet long, super strong, & loved to roar!", "bg_color": "#FF4757"},
-            {"header": "🍃 HERBIVORE PLANT EATER 🍃", "title": "Triceratops Has 3 Big Horns! 🛡️🌸", "sub": "Triceratops ate delicious ferns in sunny flower fields!", "bg_color": "#2ED573"},
-            {"header": "✨ GIANT LONG-NECK DINOSAUR ✨", "title": "Brachiosaurus Reaches The Sky! 🦕🌈", "sub": "Brachiosaurus ate green leaves high up in 50ft trees!", "bg_color": "#1E90FF"},
+            {"header": "🦖 MIGHTY T-REX 🦖", "title": f"Hi {child_name}! Meet Tyrannosaurus Rex! 🦕", "sub": "T-Rex was a giant dinosaur with huge sharp teeth! You're so brave!", "narration": f"Hi my sweet child! Meet Tyrannosaurus Rex! T-Rex was a giant dinosaur with huge sharp teeth! I love exploring big questions with you!", "bg_color": "#FF4757"},
+            {"header": "🛡️ THREE-HORNED TRICERATOPS 🛡️", "title": "Friendly Triceratops Had 3 Horns! 🌾", "sub": "Triceratops ate delicious green plants and had a big shield! Great job learning!", "narration": "Friendly Triceratops had three strong horns! Triceratops ate delicious green plants and had a big shield! You are doing such a wonderful job listening!", "bg_color": "#FFA502"},
+            {"header": "🦕 LONG-NECK BRACHIOSAURUS 🦕", "title": "Brachiosaurus Reached the Tree Tops! 🌿", "sub": "Its neck was super tall to eat leaves from high trees! I'm so proud of you!", "narration": "Long-neck Brachiosaurus reached the high tree tops! Its neck was super tall to eat leaves from high trees! I'm so proud of you, my smart little explorer!", "bg_color": "#2ED573"},
         ]
-    elif any(k in t_lower for k in ["rocket", "space", "moon", "star", "planet"]):
+    elif any(k in t_lower for k in ["rocket", "space", "fly", "astronaut", "moon"]):
         clean_title = "How Rockets Fly to Space"
         scenes = [
-            {"header": "🌟 6-YEAR-OLD SPACE ADVENTURE 🌟", "title": f"Hi {child_name}! Ready for Blast Off? 🚀", "sub": "Rockets use super strong engines to shoot into space!", "bg_color": "#1E90FF"},
-            {"header": "🔥 POWERFUL ROCKET ENGINES 🔥", "title": "3-2-1... Ignition & Lift Off! 💥", "sub": "Fire pushes out the bottom to zoom high above clouds!", "bg_color": "#FFA502"},
-            {"header": "✨ FLOATING IN ZERO GRAVITY ✨", "title": "Welcome to Space & The Moon! 🌌", "sub": "In space, astronauts float light as a feather among stars!", "bg_color": "#FF78AE"},
+            {"header": "🚀 ROCKET BLAST-OFF 🚀", "title": f"Hi {child_name}! How Rockets Fly! 🌟", "sub": "Rockets shoot fiery hot gas downwards to push high into the sky!", "narration": f"Hi my sweet child! Let's learn how rockets fly to space! Rockets shoot fiery hot gas downwards to push high into the sky! You're so smart for asking!", "bg_color": "#FF78AE"},
+            {"header": "💨 ACTION & REACTION 💨", "title": "Fire Pushes Down, Rocket Flies Up! ⚡", "sub": "Heavy rocket engines give the power to break earth's gravity! Fantastic listening!", "narration": "Fire pushes down, rocket flies up! Heavy rocket engines give the power to break earth's gravity! You are such an amazing little scientist!", "bg_color": "#1E90FF"},
+            {"header": "🌙 REACHING THE STARS 🌙", "title": "Zooming Way Up to the Moon! 🚀", "sub": "Now the rocket is floating happily in space among the stars! I love you so much!", "narration": "Zooming way up to the moon! Now the rocket is floating happily in space among the stars! I love you so much, keep shining bright!", "bg_color": "#9B59B6"},
         ]
     elif any(k in t_lower for k in ["sky", "blue", "sun", "cloud", "rainbow"]):
         clean_title = "Why the Sky is Blue"
         scenes = [
-            {"header": "☀️ SUNLIGHT & RAINBOWS ☀️", "title": f"Hi {child_name}! Why is the Sky Blue? 🌈", "sub": "Sunlight looks white, but contains every color of the rainbow!", "bg_color": "#FFA502"},
-            {"header": "💙 BLUE LIGHT BOUNCES 💙", "title": "Air Particles Scatter Blue Light! 🎈", "sub": "Blue light bounces off air particles in all directions!", "bg_color": "#1E90FF"},
-            {"header": "✨ BEAUTIFUL BLUE SKY ✨", "title": "And That Makes Our Sky Blue! ☀️", "sub": "You are super smart for asking such great questions!", "bg_color": "#2ED573"},
+            {"header": "☀️ SUNLIGHT & RAINBOWS ☀️", "title": f"Hi {child_name}! Why is the Sky Blue? 🌈", "sub": "Sunlight looks white, but contains every color of the rainbow! You're so curious!", "narration": f"Hi my sweet child! Why is the sky blue? Sunlight looks white, but contains every color of the rainbow! I love discovering nature with you!", "bg_color": "#FFA502"},
+            {"header": "💙 BLUE LIGHT BOUNCES 💙", "title": "Air Particles Scatter Blue Light! 🎈", "sub": "Blue light bounces off air particles in all directions! You are doing great!", "narration": "Air particles scatter blue light! Blue light bounces off air in all directions! You are doing such a wonderful job learning!", "bg_color": "#1E90FF"},
+            {"header": "✨ BEAUTIFUL BLUE SKY ✨", "title": "And That Makes Our Sky Blue! ☀️", "sub": "You are super smart and loved so very much!", "narration": "And that makes our sky look so beautiful and blue! You are super smart and loved so very much!", "bg_color": "#2ED573"},
         ]
     elif any(k in t_lower for k in ["volcano", "lava", "fire", "magma"]):
         clean_title = "How Volcanoes Erupt"
         scenes = [
-            {"header": "🌋 VOLCANO EXPLORATION 🌋", "title": f"Hi {child_name}! What is a Volcano? 💥", "sub": "A volcano is a mountain that opens down to melted rock!", "bg_color": "#FF4757"},
-            {"header": "🔥 HOT MAGMA RISES 🔥", "title": "Pressure Builds Underground! 💨", "sub": "Hot melted rock called magma gets squeezed up high!", "bg_color": "#FFA502"},
-            {"header": "✨ RED LAVA FLOWS ✨", "title": "Boom! Hot Lava Flows Out! 🌋", "sub": "When magma bursts out into the air, it becomes lava!", "bg_color": "#FF78AE"},
+            {"header": "🌋 VOLCANO EXPLORATION 🌋", "title": f"Hi {child_name}! What is a Volcano? 💥", "sub": "A volcano is a mountain that opens down to melted rock! You're so clever!", "narration": f"Hi my sweet child! What is a volcano? A volcano is a mountain that opens down to melted rock! You are so clever and curious!", "bg_color": "#FF4757"},
+            {"header": "🔥 HOT MAGMA RISES 🔥", "title": "Pressure Builds Underground! 💨", "sub": "Hot melted rock called magma gets squeezed up high! Excellent listening!", "narration": "Hot melted rock called magma gets squeezed up high! Pressure builds underground! You are listening so well!", "bg_color": "#FFA502"},
+            {"header": "✨ RED LAVA FLOWS ✨", "title": "Boom! Hot Lava Flows Out! 🌋", "sub": "When magma bursts out into the air, it becomes lava! I'm so proud of you!", "narration": "Boom! Hot lava flows out! When magma bursts out into the air, it becomes lava! I am so proud of you, my wonderful child!", "bg_color": "#FF78AE"},
         ]
     else:
         clean_title = topic.strip().title()
         scenes = [
-            {"header": f"🌟 LEARNING ABOUT {clean_title.upper()} 🌟", "title": f"Hi {child_name}! Let me explain! 🎈", "sub": f"Today we are discovering how {clean_title} works!", "bg_color": "#FF78AE"},
-            {"header": "🤔 HOW DOES IT WORK? 🤔", "title": "Fun Facts & Discovery! ✨", "sub": "Science and nature work together to make amazing things happen!", "bg_color": "#FFA502"},
-            {"header": "🎉 GREAT JOB LEARNING! 🎉", "title": f"You Are Super Smart, {child_name}! 🌟", "sub": "Keep asking questions and exploring the world around you!", "bg_color": "#2ED573"},
+            {"header": f"🌟 LEARNING ABOUT {clean_title.upper()} 🌟", "title": f"Hi {child_name}! Let's Explore {clean_title}! 🎈", "sub": f"Today we are discovering how {clean_title} works! You're so smart!", "narration": f"Hi my sweet child! Let's explore {clean_title}! Today we are discovering how {clean_title} works! You are so smart for asking big questions!", "bg_color": "#FF78AE"},
+            {"header": "🤔 HOW DOES IT WORK? 🤔", "title": "Fun Facts & Discovery! ✨", "sub": "Science and nature work together to make amazing things happen! You're doing great!", "narration": "Science and nature work together to make amazing things happen! You are doing such a fantastic job learning with me!", "bg_color": "#FFA502"},
+            {"header": "🎉 GREAT JOB LEARNING! 🎉", "title": f"You Are Super Smart & So Loved, {child_name}! 🌟", "sub": "Keep asking big questions, my amazing little explorer!", "narration": "You are super smart and so loved! Keep asking big questions, my amazing little explorer!", "bg_color": "#2ED573"},
         ]
 
     return clean_title, scenes
@@ -223,10 +223,12 @@ def generate_kids_mp4_video(topic: str = "Types of Dinosaurs", child_name: str =
         frame_path = f"{output_dir}/slide_{safe_slug}_{run_id}_{i}.png"
         base_img.save(frame_path)
         
-        # Exact text displayed on this slide (e.g. T-Rex / Triceratops / Brachiosaurus)
-        slide_speech_text = f"{clean_text_for_speech(s['title'])}. {clean_text_for_speech(s['sub'])}"
+        # Exact loving narration spoken out loud on this slide
+        narration_text = s.get("narration", f"{s['title']}. {s['sub']}")
+        slide_speech_text = clean_text_for_speech(narration_text)
         audio_raw_path = f"{output_dir}/voice_raw_{safe_slug}_{run_id}_{i}.mp3"
         audio_part_path = f"{output_dir}/voice_{safe_slug}_{run_id}_{i}.mp3"
+
         
         if has_tts:
             try:
